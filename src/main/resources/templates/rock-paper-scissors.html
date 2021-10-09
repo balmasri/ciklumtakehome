@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<script th:inline="javascript">
+      /*<![CDATA[*/
+          function playRound(){
+          var tableId = /*[[${table.tableId}]]*/ 'default';
+          var xhttp = new XMLHttpRequest();
+              xhttp.open("GET", "/api/game/play/"+tableId);
+              xhttp.send();
+              var str = `/api/game/${tableId}`;
+              xhttp.onreadystatechange = function() {
+                   window.location.replace(str) ;
+              }
+
+          }
+           function restart(){
+              window.location.replace("/api/game/new");
+          }
+      /*]]>*/
+
+
+
+
+   </script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R-P-S Game</title>
+    <link rel="stylesheet" href="../../lottoland.css">
+    <script src="https://kit.fontawesome.com/e391ce7786.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>Rock Paper Scissors</h1>
+<h2 id="demo">Try your luck !</h2>
+<!--  The Container  -->
+<div class="container">
+    <!--   The first section     -->
+    <div class="section">
+        <div class="show">
+            <i th:if="${table.latestP1Hand == T(com.ciklum.lottoland.enums.Hand).ROCK} " class="fas fa-hand-rock"></i>
+            <i th:if="${table.latestP1Hand == T(com.ciklum.lottoland.enums.Hand).SCISSORS}" class="fas fa-hand-scissors"></i>
+            <i th:if="${table.latestP1Hand == T(com.ciklum.lottoland.enums.Hand).PAPER}" class="fas fa-hand-paper"></i>
+        </div>
+    </div>
+    <!--   The second section     -->
+    <div class="section">
+        <div class=" show computer">
+            <i th:if="${table.latestP2Hand == T(com.ciklum.lottoland.enums.Hand).ROCK}" class="fas fa-hand-rock"></i>
+            <i th:if="${table.latestP2Hand == T(com.ciklum.lottoland.enums.Hand).SCISSORS} " class="fas fa-hand-scissors"></i>
+            <i th:if="${table.latestP2Hand == T(com.ciklum.lottoland.enums.Hand).PAPER} " class="fas fa-hand-paper"></i>
+        </div>
+    </div>
+</div>
+</div>
+<h2 style="color: rgb(233, 33, 19);" id="demo2">
+    Result:
+    <span th:text="${table.result}"></span>
+</h2>
+<h2 style="color: rgb(233, 33, 19);" id="demo2">
+    Rounds So Far <span th:text="${table.roundsSoFar}">
+         </span>
+</h2>
+<!-- This selection div contains the buttons   -->
+<br>
+<div class="selection">
+    <button onclick="playRound()">Play Round!</button>
+    <button onclick="restart()">Restart</button>
+</div>
+</body>
+</html>
